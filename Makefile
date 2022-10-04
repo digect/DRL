@@ -82,7 +82,7 @@ LDFLAGS = $(EXTMEMOPTS) $(LDMAP) $(PRINTF_LIB) $(SCANF_LIB) $(MATH_LIB)
 
 # Programming support using avrdude. Settings and variables.
 
-AVRDUDE_PROGRAMMER = stk500
+AVRDUDE_PROGRAMMER = usbasp
 AVRDUDE_PORT = /dev/term/a
 
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
@@ -103,7 +103,9 @@ AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
 # to submit bug reports.
 #AVRDUDE_VERBOSE = -v -v
 
-AVRDUDE_BASIC = -p $(MCU) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER)
+#-P $(AVRDUDE_PORT)
+AVRDUDE_FUSE  = -U lfuse:w:0x5A:m -U hfuse:w:0xFF:m
+AVRDUDE_BASIC = -p $(MCU)  -c $(AVRDUDE_PROGRAMMER) $(AVRDUDE_FUSE)
 AVRDUDE_FLAGS = $(AVRDUDE_BASIC) $(AVRDUDE_NO_VERIFY) $(AVRDUDE_VERBOSE) $(AVRDUDE_ERASE_COUNTER)
 
 
